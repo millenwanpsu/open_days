@@ -10,8 +10,6 @@
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css" />
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-        <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>
-
 		<style type="text/css">
 			.navbar {
 				margin-bottom:30px;
@@ -43,7 +41,6 @@
         <div class="jumbotron">
             <h1 id="welcome">Pick a Destination!</h1>
 		    <script type="text/javascript">
-                var objectSocket = io.connect('http://localhost:8080/'); 
                 jQuery('form').on("submit",function(event){
                     //https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
                     var formData = jQuery('form').serialize();
@@ -60,6 +57,22 @@
             <div id="experiences" class="container">
                 <h1>Experiences:</h1>
                 <a class="btn btn-secondary" href="#" role="button">more details »</a>
+                <script type="text/javascript">
+                    //https://stackoverflow.com/questions/18480550/how-to-load-all-the-images-from-one-of-my-folder-into-my-web-page-using-jquery
+                    var folder = "Imgs/";
+                    jQuery('document').ready(function(){
+                        jQuery.ajax({
+                            url : folder,
+                            success: function(pics) {
+                                jQuery(pics).find("a").attr("href", function (i, val) {
+                                    if( val.match(/\.(jpe?g)$/) ) {
+                                        jQuery('#experiences').append( "<img src='"+folder+val+"'>" );
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
             </div>
             <div class="container">
                 <h1>Restaurants:</h1>

@@ -1,3 +1,5 @@
+Copyright (c) 2018 millenwanpsu
+
 Similar Projects
 Palendar:       http://palendar.co.uk/
 Travefy:        https://travefy.com/personal-group-travel-planner
