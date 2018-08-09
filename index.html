@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Copyright (c) 2018 millenwanpsu -->
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -40,39 +41,9 @@
         </form>
         <div class="jumbotron">
             <h1 id="welcome">Pick a Destination!</h1>
-		    <script type="text/javascript">
-                jQuery('form').on("submit",function(event){
-                    //https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
-                    var formData = jQuery('form').serialize();
-                    var loc = formData.substr(formData.indexOf("location")+9);
-                    if(loc!=="undefined"){
-                        if(loc.indexOf("%")>-1){
-                            loc = loc.substr(0,loc.indexOf("%"));
-                        }
-                        jQuery("#welcome").text("Explore "+loc+"!");
-                    }
-                    return false;
-                });
-        	</script>
             <div id="experiences" class="container">
                 <h1>Experiences:</h1>
                 <a class="btn btn-secondary" href="#" role="button">more details »</a>
-                <script type="text/javascript">
-                    //https://stackoverflow.com/questions/18480550/how-to-load-all-the-images-from-one-of-my-folder-into-my-web-page-using-jquery
-                    var folder = "Imgs/";
-                    jQuery('document').ready(function(){
-                        jQuery.ajax({
-                            url : folder,
-                            success: function(pics) {
-                                jQuery(pics).find("a").attr("href", function (i, val) {
-                                    if( val.match(/\.(jpe?g)$/) ) {
-                                        jQuery('#experiences').append( "<img src='"+folder+val+"'>" );
-                                    }
-                                });
-                            }
-                        });
-                    });
-                </script>
             </div>
             <div class="container">
                 <h1>Restaurants:</h1>
@@ -83,5 +54,6 @@
                 <a class="btn btn-secondary" href="#" role="button">more details »</a>
             </div>
         </div>
+		<script type="text/javascript" src="index.js"></script>
     </body>
 </html>
