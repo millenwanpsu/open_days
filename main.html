@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css" />
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>
+
+		<style type="text/css">
+			.navbar {
+				margin-bottom:30px;
+			}
+		</style>
+        <title>Open Days</title>
+    </head>
+    <body>
+         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Open Days</a>
+            <div class="navbar-collapse collapse" id="navbar-items">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#">home</a></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <ul class="navbar-nav mx-left">
+                    <li class="nav-item"><a class="nav-link" href="#">about</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <form class="input">
+            <label for="num_days">Availability:</label>
+            <input type="text" name="num_days" placeholder="Number of Days"/>
+            <label for="location">Destination:</label>
+            <input type="text" name="location" placeholder="Portland, Oregon"/>
+            <input type="submit" value="Submit"/>
+        </form>
+        <div class="jumbotron">
+            <h1 id="welcome">Pick a Destination!</h1>
+		    <script type="text/javascript">
+                var objectSocket = io.connect('http://localhost:8080/'); 
+                jQuery('form').on("submit",function(event){
+                    //https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
+                    var formData = jQuery('form').serialize();
+                    var loc = formData.substr(formData.indexOf("location")+9);
+                    if(loc!=="undefined"){
+                        if(loc.indexOf("%")>-1){
+                            loc = loc.substr(0,loc.indexOf("%"));
+                        }
+                        jQuery("#welcome").text("Explore "+loc+"!");
+                    }
+                    return false;
+                });
+        	</script>
+            <div id="experiences" class="container">
+                <h1>Experiences:</h1>
+                <a class="btn btn-secondary" href="#" role="button">more details »</a>
+            </div>
+            <div class="container">
+                <h1>Restaurants:</h1>
+                <a class="btn btn-secondary" href="#" role="button">more details »</a>
+            </div>
+            <div class="container">
+                <h1>Events:</h1>
+                <a class="btn btn-secondary" href="#" role="button">more details »</a>
+            </div>
+        </div>
+    </body>
+</html>
