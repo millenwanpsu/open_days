@@ -15,6 +15,22 @@
 			.navbar {
 				margin-bottom:30px;
 			}
+            /*https://stackoverflow.com/questions/3029422/how-do-i-auto-resize-an-image-to-fit-a-div-container*/
+            img {
+                max-width:100%;
+                max-height:100%;
+            }
+            #experiences {
+                margin-bottom: 20px;
+            }
+            .frame {
+                display: inline-block;
+                text-align: center;
+                width: 160px;
+                height: 100px;
+                margin: 15px;
+                padding: 2px;
+            }
 		</style>
         <title>Open Days</title>
     </head>
@@ -41,9 +57,10 @@
         </form>
         <div class="jumbotron">
             <h1 id="welcome">Pick a Destination!</h1>
-            <div id="experiences" class="container">
+            <div class="container">
                 <h1>Experiences:</h1>
-                <a class="btn btn-secondary" href="#" role="button">more details »</a>
+                <div id="experiences">
+                </div>
             </div>
             <div class="container">
                 <h1>Restaurants:</h1>

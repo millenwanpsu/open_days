@@ -22,11 +22,16 @@ jQuery('form').on("submit",function(event){
             success: function(pics) {
                 jQuery(pics).find("a").attr("href", function (i, val) {
                     if(val.match(/\.(jpe?g)$/) ) {
-                        var source = "<img src='"+folder+val+"'>";
+                        //https://stackoverflow.com/questions/23331873/html-img-onclick-javascript
+                        //https://stackoverflow.com/questions/2116558/fastest-method-to-replace-all-instances-of-a-character-in-a-string
+                        var name = val.replace(/%20/g," ");
+                        name = name.substr(0,name.indexOf("."));
+                        var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder+val+"' onclick=\"select(this)\"/></div>";
                         console.log(source);
                         jQuery('#experiences').append(source);
                     }
                 });
+                jQuery('#experiences').append("<button onclick=schedule()>Submit</button>");
             }
         });
     }
@@ -35,3 +40,32 @@ jQuery('form').on("submit",function(event){
     }
     return false;
 });
+
+function select(element)
+{
+    if(jQuery(element).css("border-top-style") == "none"){
+        jQuery(element).css("border", "3pt solid green");
+    }
+    else {
+        jQuery(element).css("border", "none");
+    }
+}
+
+function schedule(){
+    var selected = "";
+    jQuery('#experiences .frame').each(function(index){
+        if(jQuery(this).find('img').css("border-top-style") != "none"){
+            selected += (jQuery(this).find('label').text() + "\n");
+        }
+    });
+    console.log(selected);
+    //https://stackoverflow.com/questions/37167755/writing-to-file-using-ajax
+    jQuery.ajax({
+        type: 'POST',
+        url: "index.php",
+        data: {selections: selected},
+        success: function(result){
+            console.log('schedule.txt updated')
+        }
+    });
+}
