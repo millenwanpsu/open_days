@@ -4,40 +4,36 @@
 jQuery('form').on("submit",function(event){
     //https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
     var formData = jQuery('form').serialize();
-    var day = formData.substr(formData.indexOf("num_days")+9);
-    day = day.substr(0,day.indexOf("&"));
     var loc = formData.substr(formData.indexOf("location")+9);
-    if(loc!=""){
-        if(loc.indexOf("%")>-1){
-            loc = loc.substr(0,loc.indexOf("%"));
-            //https://stackoverflow.com/questions/4878756/how-to-capitalize-first-letter-of-each-word-like-a-2-word-city
-            loc = loc.charAt(0).toUpperCase()+loc.substr(1).toLowerCase();
-        }
-        jQuery("#welcome").text("Explore "+loc+"!");
+    if(loc!="" && loc.indexOf("%")>-1){
+        loc = loc.substr(0,loc.indexOf("%"));
+        //https://stackoverflow.com/questions/4878756/how-to-capitalize-first-letter-of-each-word-like-a-2-word-city
+        loc = loc.charAt(0).toUpperCase()+loc.substr(1).toLowerCase();
+    }
 
-        //https://stackoverflow.com/questions/18480550/how-to-load-all-the-images-from-one-of-my-folder-into-my-web-page-using-jquery
-        var folder = "Imgs/"+loc+"/experiences/";
-        jQuery.ajax({
-            url : folder,
-            success: function(pics) {
-                jQuery(pics).find("a").attr("href", function (i, val) {
-                    if(val.match(/\.(jpe?g)$/) ) {
-                        //https://stackoverflow.com/questions/23331873/html-img-onclick-javascript
-                        //https://stackoverflow.com/questions/2116558/fastest-method-to-replace-all-instances-of-a-character-in-a-string
-                        var name = val.replace(/%20/g," ");
-                        name = name.substr(0,name.indexOf("."));
-                        var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder+val+"' onclick=\"select(this)\"/></div>";
-                        console.log(source);
-                        jQuery('#experiences').append(source);
-                    }
-                });
-                jQuery('#experiences').append("<button onclick=schedule()>Submit</button>");
-            }
-        });
-    }
-    else{
-        jQuery("#welcome").text("Please choose a destination!");
-    }
+    //https://stackoverflow.com/questions/18480550/how-to-load-all-the-images-from-one-of-my-folder-into-my-web-page-using-jquery
+    var folder = "Imgs/"+loc+"/experiences/";
+    jQuery.ajax({
+        url : folder,
+        success: function(pics) {
+            jQuery(pics).find("a").attr("href", function (i, val) {
+                if(val.match(/\.(jpe?g)$/) ) {
+                    //https://stackoverflow.com/questions/23331873/html-img-onclick-javascript
+                    //https://stackoverflow.com/questions/2116558/fastest-method-to-replace-all-instances-of-a-character-in-a-string
+                    var name = val.replace(/%20/g," ");
+                    name = name.substr(0,name.indexOf("."));
+                    var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder+val+"' onclick=\"select(this)\"/></div>";
+                    jQuery('#experiences').append(source);
+                    jQuery("#welcome").text("Explore "+loc+"!");
+                }
+            });
+            jQuery('#experiences').append("<button onclick=schedule()>Submit</button>");
+        },
+        error: function(){
+            window.alert('No data for this location yet! Please try again.')
+            jQuery("#welcome").text("Please choose a destination!");
+        }
+    });
     return false;
 });
 
@@ -52,12 +48,21 @@ function select(element)
 }
 
 function schedule(){
-    var selected = "";
+    var selected = "----Sample Schedule----\n";
+    var formData = jQuery('form').serialize();
+    var days = formData.substr(formData.indexOf("num_days")+9);
+    days = days.substr(0,days.indexOf("&"));
+    var count = 1;
     jQuery('#experiences .frame').each(function(index){
-        if(jQuery(this).find('img').css("border-top-style") != "none"){
-            selected += (jQuery(this).find('label').text() + "\n");
+        if(count >= days && jQuery(this).find('img').css("border-top-style") != "none"){
+            selected += ("Day " + count + ": " + jQuery(this).find('label').text() + "\n");
+            ++count;
         }
     });
+    if((count-1) > days){
+        window.alert('You have too many events planned!\n You will need more than ' + days + ' days to visit them all!');
+    }
+    selected += "-----------------------";
     console.log(selected);
     //https://stackoverflow.com/questions/37167755/writing-to-file-using-ajax
     jQuery.ajax({
@@ -65,7 +70,7 @@ function schedule(){
         url: "index.php",
         data: {selections: selected},
         success: function(result){
-            console.log('schedule.txt updated')
+            window.alert('schedule.txt updated')
         }
     });
 }
