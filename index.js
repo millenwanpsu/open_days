@@ -12,9 +12,9 @@ jQuery('form').on("submit",function(event){
     }
 
     //https://stackoverflow.com/questions/18480550/how-to-load-all-the-images-from-one-of-my-folder-into-my-web-page-using-jquery
-    var folder = "Imgs/"+loc+"/experiences/";
+    var folder_xp = "Imgs/"+loc+"/experiences/";
     jQuery.ajax({
-        url : folder,
+        url : folder_xp,
         success: function(pics) {
             jQuery(pics).find("a").attr("href", function (i, val) {
                 if(val.match(/\.(jpe?g)$/) ) {
@@ -22,7 +22,7 @@ jQuery('form').on("submit",function(event){
                     //https://stackoverflow.com/questions/2116558/fastest-method-to-replace-all-instances-of-a-character-in-a-string
                     var name = val.replace(/%20/g," ");
                     name = name.substr(0,name.indexOf("."));
-                    var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder+val+"' onclick=\"select(this)\"/></div>";
+                    var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder_xp+val+"' onclick=\"select(this)\"/></div>";
                     jQuery('#experiences').append(source);
                     jQuery("#welcome").text("Explore "+loc+"!");
                 }
@@ -32,6 +32,21 @@ jQuery('form').on("submit",function(event){
         error: function(){
             window.alert('No data for this location yet! Please try again.')
             jQuery("#welcome").text("Please choose a destination!");
+        }
+    });
+    var folder = "Imgs/"+loc+"/restaurants/";
+    jQuery.ajax({
+        url : folder,
+        success: function(pics) {
+            jQuery(pics).find("a").attr("href", function (i, val) {
+                if(val.match(/\.(jpe?g)$/) ) {
+                    var name = val.replace(/%20/g," ");
+                    name = name.substr(0,name.indexOf("."));
+                    var source = "<div class=\"frame\"><label>"+name+"</label><img src='"+folder+val+"' onclick=\"select(this)\"/></div>";
+                    jQuery('#restaurants').append(source);
+                }
+            });
+            jQuery('#restaurants').append("<div id='submit'><button onclick=schedule()>Submit</button></div>");
         }
     });
     return false;
