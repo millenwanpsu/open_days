@@ -86,7 +86,7 @@ function schedule(){
         url: "index.php",
         data: {selections: selected},
         success: function(result){
-            window.alert('schedule.txt updated');
+            window.alert("sample schedule " + schedule_count + " added");
         }
     });
     jQuery('.dropdown-menu').append("<li><a href=\"#\" id=\""+schedule_count+"\">Sample Schedule "+schedule_count+"</a></li>");
