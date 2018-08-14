@@ -27,7 +27,7 @@ jQuery('form').on("submit",function(event){
                     jQuery("#welcome").text("Explore "+loc+"!");
                 }
             });
-            jQuery('#experiences').append("<button onclick=schedule()>Submit</button>");
+            jQuery('#experiences').append("<div id='submit'><button onclick=schedule()>Submit</button></div>");
         },
         error: function(){
             window.alert('No data for this location yet! Please try again.')
@@ -54,7 +54,7 @@ function schedule(){
     days = days.substr(0,days.indexOf("&"));
     var count = 1;
     jQuery('#experiences .frame').each(function(index){
-        if(count >= days && jQuery(this).find('img').css("border-top-style") != "none"){
+        if(count <= days && jQuery(this).find('img').css("border-top-style") != "none"){
             selected += ("Day " + count + ": " + jQuery(this).find('label').text() + "\n");
             ++count;
         }
