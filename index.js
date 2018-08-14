@@ -46,7 +46,7 @@ jQuery('form').on("submit",function(event){
                     jQuery('#restaurants').append(source);
                 }
             });
-            jQuery('#restaurants').append("<div id='submit'><button onclick=schedule()>Submit</button></div>");
+            jQuery('#restaurants').append("<div id='submit'><button onclick=book()>Submit</button></div>");
         }
     });
     return false;
@@ -62,8 +62,10 @@ function select(element)
     }
 }
 
+var schedule_count = 0;
 function schedule(){
-    var selected = "----Sample Schedule----\n";
+    ++schedule_count;
+    var selected = "----Sample Schedule "+schedule_count+"----\n";
     var formData = jQuery('form').serialize();
     var days = formData.substr(formData.indexOf("num_days")+9);
     days = days.substr(0,days.indexOf("&"));
@@ -77,15 +79,22 @@ function schedule(){
     if((count-1) > days){
         window.alert('You have too many events planned!\n You will need more than ' + days + ' days to visit them all!');
     }
-    selected += "-----------------------";
-    console.log(selected);
+    selected += "--------------------------";
     //https://stackoverflow.com/questions/37167755/writing-to-file-using-ajax
     jQuery.ajax({
         type: 'POST',
         url: "index.php",
         data: {selections: selected},
         success: function(result){
-            window.alert('schedule.txt updated')
+            window.alert('schedule.txt updated');
         }
     });
+    jQuery('.dropdown-menu').append("<li><a href=\"#\" id=\""+schedule_count+"\">Sample Schedule "+schedule_count+"</a></li>");
+    jQuery('#'+schedule_count).on("click",function(){
+        window.alert(selected);
+    });
+}
+
+function book(){
+    console.log('Add Selected Restaurants to Schedule.');
 }

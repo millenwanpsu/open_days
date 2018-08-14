@@ -1,6 +1,6 @@
-----Sample Schedule----
-Day 1: Art Museum
-Day 2: Crater Lake
-Day 3: Multnomah Falls
-Day 4: Zoo
------------------------
+----Sample Schedule 2----
+Day 1: Japanese Garden
+Day 2: Multnomah Falls
+Day 3: OMSI
+Day 4: Pittock Mansion
+--------------------------
