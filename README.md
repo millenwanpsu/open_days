@@ -13,6 +13,7 @@ After entering and submitting the number of available days and destination, labe
 By selecting the particular image, the associated restaurant or activity will be added to a "shopping cart." These items will glow green. Reselecting them will remove them from the cart.<br />
 After submitting, the shopping cart will be organized into a suggested schedule. Schedules stored in the upper right hand corner can be viewed for reference or comparison.<br />
 Failure to enter an available location will be recorded. Alerts will also be given for selecting more activities than allowed by the number of days traveling. Currently restaurants will not appear on the schedule.<br />
+To reset the location, images, and schedules and return to the Open Days home page, click either the "home" or "Open Days" button in the navigation bar.<br />
 
 # Checkout:
 Create a server or use an existing one.<br />
