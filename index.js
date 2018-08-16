@@ -97,7 +97,7 @@ function schedule(){
             window.alert("sample schedule " + schedule_count + " added");
         }
     });
-    jQuery('.dropdown-menu').append("<li><a href=\"#\" id=\""+schedule_count+"\">Sample Schedule "+schedule_count+"</a></li>");
+    jQuery('.dropdown-menu').append("<a class=\"dropdown-item\" href=\"#\" id=\""+schedule_count+"\">Sample Schedule "+schedule_count+"</a>");
     jQuery('#'+schedule_count).on("click",function(){
         window.alert(selected);
     });
