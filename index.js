@@ -65,21 +65,29 @@ function select(element)
 var schedule_count = 0;
 function schedule(){
     ++schedule_count;
-    var selected = "----Sample Schedule "+schedule_count+"----\n";
+    var selected = "----Sample Schedule "+schedule_count+"----";
     var formData = jQuery('form').serialize();
     var days = formData.substr(formData.indexOf("num_days")+9);
     days = days.substr(0,days.indexOf("&"));
     var count = 1;
     jQuery('#experiences .frame').each(function(index){
-        if(count <= days && jQuery(this).find('img').css("border-top-style") != "none"){
-            selected += ("Day " + count + ": " + jQuery(this).find('label').text() + "\n");
+        if(jQuery(this).find('img').css("border-top-style") != "none"){
+            if(count == parseInt(days)+1){
+                selected += ("\n--------------------------\nAdditional Days required to visit:\n");
+            }
+            if(count > days){
+                selected += (jQuery(this).find('label').text() + ", ");
+            }
+            else {
+                selected += ("\nDay " + count + ": " + jQuery(this).find('label').text());
+            }
             ++count;
         }
     });
     if((count-1) > days){
-        window.alert('You have too many events planned!\n You will need more than ' + days + ' days to visit them all!');
+        window.alert('You have too many events selected!\nYou will need more than ' + days + ' days to visit them all!');
     }
-    selected += "--------------------------";
+    selected += "\n--------------------------";
     //https://stackoverflow.com/questions/37167755/writing-to-file-using-ajax
     jQuery.ajax({
         type: 'POST',
