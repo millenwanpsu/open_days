@@ -1,5 +1,6 @@
 'use strict';
-//Copyright (c) 2018 millenwanpsu
+//Copyright (c) 2018 Ming-Liang Millen Wan
+//MIT License
 
 jQuery('form').on("submit",function(event){
     //https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
